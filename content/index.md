@@ -24,7 +24,7 @@ This material is divided in two parts:
   GitHub and GitLab.
 
 
-## Part 1: How to document and test your research software
+## Part 1: Best practices in Research Software Engineering
 
 ### Documentation
 In this lesson we will discuss different solutions for implementing and
@@ -114,12 +114,22 @@ conclusions
 
 ## Part 2: Automation on Forges and CI
 
-We will see how to
-deploy documentation to [GitHub Pages](https://pages.github.com)
-and [GitLab Pages](https://about.gitlab.com/features/pages/).
+Platforms like GitHub and GitLab offer services
+that can be used to automate parts of software 
+development and maintenance.
 
-The approach that we will learn will be transferable to
-[Bitbucket Pages](https://pages.bitbucket.io), too.
+We will see how to
+- trigger remote pipelines
+- run automatically 
+  the test suite of our code.
+- deploy documentation to [GitHub Pages](https://pages.github.com)
+  and [GitLab Pages](https://about.gitlab.com/features/pages/).
+
+We will also discuss other possibilities 
+these automation platform offers,
+and some additional, useful features.
+
+
 
 ```{prereq}
 You need an account on the forge you intend to use (GitHub.com, or a GitLab server of your choice).
@@ -130,10 +140,10 @@ You need an account on the forge you intend to use (GitHub.com, or a GitLab serv
 :maxdepth: 1
 :caption: Part 2: Automation on Sofware Forges and CI
 
-gh_workflow.md
-gh-pages.md
 continuous-integration.md
 full-cycle-ci.md
+gh_workflow.md
+gh-pages.md
 ```
 
 ## Other Material
