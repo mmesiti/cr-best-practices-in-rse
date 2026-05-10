@@ -138,7 +138,7 @@ You need an account on the forge you intend to use (GitHub.com, or a GitLab serv
 
 ```{toctree}
 :maxdepth: 1
-:caption: Part 2: Automation on Sofware Forges and CI
+:caption: Part 2: Automation on Software Forges and CI
 
 continuous-integration.md
 full-cycle-ci.md
