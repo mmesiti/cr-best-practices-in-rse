@@ -25,26 +25,85 @@
 
 ---
 
-## Demonstration - Deploy Sphinx documentation to GitHub Pages
+## Demonstration - Deploy Sphinx documentation to GitHub/GitLab Pages
 
-````{exercise} GH-Pages-1: Deploy Sphinx documentation to GitHub Pages
-In this exercise we will create an example repository on GitHub and
-deploy it to GitHub Pages.
+``````{exercise} GH-Pages-1: Deploy Sphinx documentation to GitHub or GitLab Pages
+In this exercise we will create an example repository on a software forge
+(GitHub or GitLab) and deploy it to the corresponding "Page" service
+(GitHub pages or GitLab pages)
 
-**Step 1**: Go to the [documentation-example](https://github.com/coderefinery/documentation-example/generate) project template
+**Preliminary: Verify the "Pages" feature is available on  your forge**
+
+`````{tabs}
+````{group-tab} GitHub
+On `github.com`, the feature is typically available.
+````
+````{group-tab} GitLab
+On GitLab servers, it depends on the configuration. 
+- On `gitlab.com`, the feature is typically available.
+- On `codebase.helmholtz.cloud`, the feature is typically available
+- On other instances, you have to check.
+  You can verify that in a project you have on that GitLab instance.
+  Go to the page of a project, on **Settings** -> **General** -> **Visibility, project features, permissions** and check if the  **Pages** can be activated. 
+  If not, then your GitLab instance might not allow you to host pages,
+  and you will need another instance or service to host your static website.
+````
+`````
+
+
+**Step 1**: 
+
+Generate the repository to be used as the starting point. 
+Repositories can be generated from templates,
+created from imports, or created as empty and filled with a push
+from you own machine.
+`````{tabs}
+```{group-tab} GitHub
+In the case of GitHub, the most convenient way is to generate the repository from a template.
+
+Go to the [documentation-example](https://github.com/coderefinery/documentation-example/generate) project template
 on GitHub and create a copy to your namespace.
 - Give it a name, for instance "documentation-example".
 - You don't need to "Include all branches"
 - Click on "Create a repository".
+```
+```{group-tab} GitLab
+Oh GitLab, althoug a "template" feature is present, 
+its use is more constrained, so we will instead *import*
+the template repository from GitHub.
+
+- Go to your account on the GitLab instance you plan to use,
+click on the `+` icon at the top of the page on the right,
+and click on "New Project/Repository".
+- Click on the "Import Project" tile, then on "Repository by URL"
+- In the "Git repository URL" field, paste `https://github.com/coderefinery/documentation-example`,
+  and click the "Check connection" button, which is immediately on the right.
+- You also need to choose:
+  - a project name, for instance "documentation-example"
+  - an appropriate group or namespace. Your personal namespace is fine.
+  - a visibility level: choose "public", 
+    otherwise the pipelines you create 
+    will not be able to run on "public" infrastructure.
+
+After that, click on "Create Project". 
+You will see that GitLab is basically cloning the GitHub project.
+
+```
+`````
+
 
 **Step 2**: Browse the new repository.
-- It will look very familar to the previous episode.
-- However, we have moved the documentation part under `doc/` (many projects do it this
-  way). But it is still a Sphinx documentation project.
+- The documentation part of the project is in `doc/` 
+  (many projects do it this way).
 - The source code for your project could then go under `src/`.
 
 
-**Step 3**: Add the GitHub Action to your new Git repository.
+**Step 3**: Automate the generation of the documentation
+
+`````{tabs}
+````{group-tab} GitHub
+
+Add the GitHub Action to your new Git repository.
 - Add a new file at `.github/workflows/documentation.yml` (either through terminal or web interface), containing:
 ```{code-block} yaml
 :linenos:
@@ -86,8 +145,29 @@ jobs:
   check the action at `https://github.com/USER/documentation-example/actions`
   (replace `USER` with your GitHub username).
 
-**Step 4**: Enable GitHub Pages
-- On GitHub go to "Settings" -> "Pages".
+````
+````{group-tab} GitLab
+
+On GitLab, automation is typically managed by the `.gitlab-ci.yml` file 
+at the top directory of your repository. 
+
+Create that file (if not existing), and add the definition of a new job in it:
+```{code-block} yaml
+:linenos:
+create-pages:
+  image: python:latest
+  script:
+    - pip install sphinx sphinx_rtd_theme myst_parser
+    - sphinx-build doc public 
+  pages: true
+```
+````
+`````
+
+**Step 4**: Enable Pages feature and verify it's running
+`````{tabs}
+````{group-tab} GitHub
+- Go to "Settings" -> "Pages".
 - Under "Build and deployment"
   - In the **Source** section: choose "Deploy from a branch" in the dropdown menu
   - In the **Branch** section: choose "gh-pages" and "/ (root)" in the dropdown menus
@@ -95,23 +175,50 @@ jobs:
 - You should now be able to verify the pages deployment in the "Actions" list 
   ([this is how it looks like](https://github.com/coderefinery/documentation/actions)
   for this lesson material).
+````
+````{group-tab} GitLab
+ With the default settings, on a GitLab server with the Pages feature enabled 
+everything should work. To check:
 
+- Go to Build -> Pipelines. 
+  There should be a running (or complete) pipeline at the top of the list,
+  with two stages.
+  - if you see only one stage, the "Pages" feature might not be active for your repository or for the whole instance 
+  - if you see no pipelines, then the CI/CD feature might be disabled, or you might have misnamed the `.gitlab-ci.yml` file.
+  (the project features can be checked in **Settings**->**General**->***Visibility, project features, permissions**)
+
+````
+`````
 **Step 5**: Verify the result
-- Your site should now be live on `https://USER.github.io/documentation-example/` (replace USER).
+`````{tabs}
+````{group-tab} GitHub
+Your site should now be live at 
+`https://USER.github.io/documentation-example/` (replace USER).
 
+````
+````{group-tab} GitLab
+Your site should be live. 
+To find out the exact URL, 
+go to the main page of your project
+and on the right 
+(under the "Project Information" header)
+click on the "GitLab Pages" link).
+````
+`````
 **Step 6 (optional)**: Verify refreshing the documentation
 - Commit some changes to your documentation
 - Verify that the documentation website refreshes after your changes (can take few seconds or a minute)
-````
+
+``````
 
 ## Exercise - Sphinx documentation on GitHub Pages
 ````{exercise} GH-Pages-2: Putting it all together 
 
 1. Follow the above instructions to create a new repository with a Sphinx documentation project;
 2. Try adding one or more of the following to your Sphinx project:  
-   1. API documentation (see [previous exercise](#api-exercise) on API references) which requires the `sphinx-autodoc2` package.
-   2. a Jupyter notebook (see [previous exercise](#jupyter-exercise) on Jupyter notebooks) which requires the `myst-nb` package.
-   3. change the theme (see the end of [the quickstart](#quickstart)). You can browse themes and find their package names on the [Sphinx themes gallery](https://sphinx-themes.org/#themes).
+   1. API documentation (see [exercise in part 1](#api-exercise) on API references) which requires the `sphinx-autodoc2` package.
+   2. a Jupyter notebook (see [exercise in part 1](#jupyter-exercise) on Jupyter notebooks) which requires the `myst-nb` package.
+   3. change the theme (see the end of [the quickstart in part 1](#quickstart)). You can browse themes and find their package names on the [Sphinx themes gallery](https://sphinx-themes.org/#themes).
 
    ```{important}
       The computer on which the GitHub actions run is *not* your local machine,
@@ -125,30 +232,38 @@ What do you need to change in the workflow file?
 
 ```{solution} Solution
 1. **API documentation**
-   1. Change line 16 of `.github/workflows/documentation.yml` from `pip install sphinx sphinx_rtd_theme myst_parser` to `pip install sphinx sphinx_rtd_theme myst_parser sphinx-autodoc2`.
+   1. In the workflow/pipeline definition file 
+      (`.github/workflows/documentation.yml`  or `.gitlab-ci.yml`),
+      when calling `pip`, add the package 
+      `sphinx-autodoc2` 
+      to the list of packages to install.
    2. Follow the instructions in [Sphinx-3](#api-exercise) changing paths so that:
       1. `multiply.py` is `src/multiply.py` and is specified as `../src/multiply.py` in the `autodoc2_packages` preference in `conf.py`
       2. `conf.py` is `doc/conf.py`
       3. `index.md` is `doc/index.md`.
    3. Commit and push your changes, verify the action has run successfully, and view the built site in your browser.
 2. **a Jupyter notebook**
-   1. Change line 16 of `.github/workflows/documentation.yml` from `pip install sphinx sphinx_rtd_theme myst_parser` to `pip install sphinx sphinx_rtd_theme myst_parser myst-nb`.
+   1. In the workflow/pipeline definition file 
+      (`.github/workflows/documentation.yml`  or `.gitlab-ci.yml`),
+      when calling `pip`, add the package 
+      `myst-nb`
+      to the list of packages to install.
    2. Follow the instructions in [Sphinx-4](#jupyter-exercise) changing paths so that:
       1. `flower.md` is `doc/flower.md`
       2. `conf.py` is `doc/conf.py`
       3. `index.md` is `doc/index.md`.
    3. Commit and push your changes, verify the action has run successfully, and view the built site in your browser.
 3. **change the theme**
-   1. Change line 16 of `.github/workflows/documentation.yml` and add the theme package if necessary.
+   1. In the workflow/pipeline definition file 
+      (`.github/workflows/documentation.yml`  or `.gitlab-ci.yml`),
+      when calling `pip`,
+      and add the theme package if necessary.
    2. In `doc/conf.py` change `html_theme = 'sphinx_rtd_theme'` to the name of your chosen theme.
    3. Commit and push your changes, verify the action has run successfully, and view the built site in your browser.
 ```
 ````
 
-## Alternatives to GitHub Pages
-
-- [GitLab Pages](https://docs.gitlab.com/ee/user/project/pages/)
-  and [GitLab CI](https://docs.gitlab.com/ee/ci/) can create a very similar workflow.
+## Alternatives to GitHub and GitLab pages
 
 - [Read the Docs](https://readthedocs.org) is the most common alternative to
   hosting in GitHub Pages.
