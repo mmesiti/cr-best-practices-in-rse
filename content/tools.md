@@ -124,10 +124,21 @@ These tools offer some or all of these features:
          - Full-text server-side on [Read the docs](https://about.readthedocs.com)
        - **Validation**: via [doctest](https://docs.python.org/3/library/doctest.html)
 
-     - [MkDocs](https://www.mkdocs.org/): A Markdown-first static site generator.
+     - [MkDocs](https://www.mkdocs.org/): A Markdown-first static site generator
+       (with a vast system of plugins developed independently).
        - **API Reference generation**: via 
          [mkdocstrings](https://mkdocstrings.github.io/)
        - **Search:** search plugin for client-side (Javascript that runs in the browser - lunr.js)
+       Project now (as of 2026) not maintained [^mkdocsdrama]
+
+       [^mkdocsdrama]: After somewhat dramatic events (2026), 
+             MkDocs 1.x is now superseded by [Zensical](https://zensical.org/),
+             which tries to keep compatibility wiht MkDocs 1.x.
+             (MkDocs 2.0 is also being developed 
+             but projects and plugins based on 1.x 
+             will break).
+       
+       
        
      - [Doxygen](https://www.doxygen.nl/):
        - **API Reference generation**: has also support for Python
@@ -269,5 +280,9 @@ tables, links, ...                tables, links, ...
 
 
 ```{keypoints}
+- READMEs are typically a good starting point
 - Some popular solutions make reproducibility and maintenance of multiple code versions difficult.
+- The landscape of tools is very diversified and every community has their own favourite.
+- The basic functionality of all Static site generators is very similar, 
+  but specific aspects (API ref generation, search, validation) differ.
 ```
