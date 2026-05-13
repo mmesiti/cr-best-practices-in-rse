@@ -1,17 +1,17 @@
-# Automated testing
+# Testing on software forges
 
 ```{questions}
 - How can we implement automatic testing each time we push changes to the repository?
 - Why is it good to autoclose issues with commit messages?
 ```
 
-## Continuous integration
+## "Continuous integration"
 
 We will now learn to set up automatic tests using either GitHub Actions or
-GitLab CI - you can choose which one to use and instructions are provided for both.
+GitLab CI/CD - you can choose which one to use and instructions are provided for both.
 
 This exercise can be run in "collaborative mode" by following instead the instructions
-in [Full-cycle collaborative workflow](./full-cycle-ci). In the collaborative version steps
+in [Full collaborative workflow](./full-cycle-ci). In the collaborative version steps
 C-D below are performed by a collaborator.
 
 
@@ -20,7 +20,7 @@ C-D below are performed by a collaborator.
 In this exercise, we will:
 
 - **A.** Create and add code to a repository on GitHub/GitLab (or, alternatively, fork and clone an existing example repository)
-- **B.** Set up tests with GitHub Actions/ GitLab CI
+- **B.** Set up tests with GitHub Actions/ GitLab CI/CD
 - **C.** Find a bug in our repository and open an issue to report it
 - **D.** Fix the bug on a bugfix branch and open a pull request (GitHub)/ merge request (GitLab)
 - **E.** Merge the pull/merge request and see how the issue is automatically closed.

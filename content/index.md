@@ -24,6 +24,26 @@ This material is divided in two parts:
   GitHub and GitLab.
 
 
+```{prereq}
+   1. Basic understanding of Git.
+
+   2. For the Sphinx part, You need to have
+      [sphinx](https://www.sphinx-doc.org) and [sphinx_rtd_theme](https://sphinx-rtd-theme.readthedocs.io/) installed
+      (they are part of the [coderefinery environment](https://coderefinery.github.io/installation/conda-environment/)).
+
+   3. You need `pytest` <http://doc.pytest.org> (as part of Anaconda or Miniconda or Virtual Environment).
+
+   4. (Optional) To work on exercises in other languages than Python,
+      please follow the instructions under "Language-specific
+      instructions" in the `Test design episode <https://coderefinery.github.io/testing/test-design/>`__
+      to install the recommended testing frameworks.
+
+If you wish to follow in the terminal and are new to the command line, 
+CodeRefinery has recorded a [short shell crash course](https://youtu.be/xbTTDLA3txI).
+
+```
+
+
 ## Part 1: Best practices in Research Software Engineering
 
 ### Documentation
@@ -44,6 +64,18 @@ We will then learn how to build documentation with the
 **documentation generator** [Sphinx](https://www.sphinx-doc.org).
 
 We will discuss best practices, and briefly discuss the available tools.
+
+```{toctree}
+:maxdepth: 1
+
+in-code-documentation.md
+writing-readme-files.md
+sphinx.md
+tools.md
+wishlist.md
+summary.md
+```
+
 
 ### Testing 
 
@@ -68,41 +100,8 @@ and how such a cycle can be implemented.
 We will see how automated testing works 
 and practice designing and writing tests.
 
-
-```{prereq}
-   1. Basic understanding of Git.
-
-   2. For the Sphinx part, You need to have
-      [sphinx](https://www.sphinx-doc.org) and [sphinx_rtd_theme](https://sphinx-rtd-theme.readthedocs.io/) installed
-      (they are part of the [coderefinery environment](https://coderefinery.github.io/installation/conda-environment/)).
-
-   3. You need `pytest <http://doc.pytest.org>`__ (as part of Anaconda or Miniconda or Virtual Environment).
-
-   4. (Optional) To work on exercises in other languages than Python,
-      please follow the instructions under "Language-specific
-      instructions" in the `Test design episode <https://coderefinery.github.io/testing/test-design/>`__
-      to install the recommended testing frameworks.
-
-If you wish to follow in the terminal and are new to the command line, 
-CodeRefinery has recorded a [short shell crash course](https://youtu.be/xbTTDLA3txI).
-
-```
-
 ```{toctree}
 :maxdepth: 1
-:caption: Part 1 - Documentation
-
-in-code-documentation.md
-writing-readme-files.md
-sphinx.md
-tools.md
-wishlist.md
-summary.md
-```
-
-```{toctree}
-:maxdepth: 1
-:caption: Part 1 - Testing
 
 motivation.md
 locally.md
@@ -112,7 +111,9 @@ conclusions
 ```
 
 
-## Part 2: Automation on Forges and CI
+
+
+# Part 2: Automation on Forges and CI
 
 Platforms like GitHub and GitLab offer services
 that can be used to automate parts of software 
@@ -121,7 +122,7 @@ development and maintenance.
 We will see how to
 - trigger remote pipelines
 - run automatically 
-  the test suite of our code.
+  the test suite of our code
 - deploy documentation to [GitHub Pages](https://pages.github.com)
   and [GitLab Pages](https://about.gitlab.com/features/pages/).
 
@@ -140,10 +141,12 @@ You need an account on the forge you intend to use (GitHub.com, or a GitLab serv
 :maxdepth: 1
 :caption: Part 2: Automation on Software Forges and CI
 
+automation-general.md
 continuous-integration.md
 full-cycle-ci.md
 gh_workflow.md
 gh-pages.md
+ci-misc.md
 ```
 
 ## Other Material

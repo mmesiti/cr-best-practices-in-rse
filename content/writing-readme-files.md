@@ -9,12 +9,14 @@ Use it to communicate important information about your project!  For many
 smaller or mid-size projects, this is enough documentation.  It's not that hard
 to make a basic one, and it's easy to expand as needed.
 
+For motivation: see [MakeaREADME](https://www.makeareadme.com/)
 
 ## Demonstration: Have fun testing some README features
 
 ````{exercise} Exercise README-1: Have fun testing some README features you may not have heard about
 
-- Test the effect of adding the following to your GitHub README ([read
+- Test the effect of adding the following to your GitHub README 
+  ([read
   more](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts)):
   ```markdown
   > [!NOTE]
@@ -44,7 +46,8 @@ to make a basic one, and it's easy to expand as needed.
   </details>
   ```
 
-- Would you like to add a badge like this one: [![please replace with alt text](https://img.shields.io/badge/anytext-youlike-blue)](https://example.org)?
+- Would you like to add a badge like this one: 
+  [![please replace with alt text](https://img.shields.io/badge/anytext-youlike-blue)](https://example.org)?
 
   Badge that links to a website (see also <https://shields.io/>):
   ```markdown

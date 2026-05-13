@@ -1,27 +1,21 @@
-# Deploying Sphinx documentation to GitHub Pages
+# Deploying Sphinx documentation 
 
 ```{objectives}
-- Create a basic workflow which you can take home and adapt for your project.
+- Create a basic workflow for deploying documentation 
+  which you can take home and adapt for your project.
 ```
 
-## [GitHub Pages](https://pages.github.com/)
+[GitHub Pages](https://pages.github.com/) and [GitLab Pages](https://docs.gitlab.com/user/project/pages/)
+serve websites from a GitHub/GitLab repository.
 
-- Serve websites from a GitHub repository.
-- It is no problem to serve using your own URL `https://myproject.org` instead of `https://myuser.github.io/myproject`.
+We will let them run `sphinx-build` and make the result 
+available on GitHub/GitLab Pages.
 
+We host source code with documentation sources on a public Git repository,
+and we want to build the documentation as a static website and serve it.
 
-## [GitHub Actions](https://github.com/features/actions/)
-
-- Automatically runs code when your repository changes.
-- We will let it run `sphinx-build` and make the result available to GitHub Pages.
-
-
-## Our goal: putting it all together
-
-- Host source code with documentation sources on a public Git repository.
-- Each time we `git push` to the repository, a GitHub action triggers to
-  rebuild the documentation.
-- The documentation is pushed to a separate branch called 'gh-pages'.
+Each time we `git push` to the repository, a GitHub action or a GitLab pipeline
+triggers to rebuild the documentation.
 
 ---
 
@@ -59,7 +53,7 @@ created from imports, or created as empty and filled with a push
 from you own machine.
 `````{tabs}
 ```{group-tab} GitHub
-In the case of GitHub, the most convenient way is to generate the repository from a template.
+On GitHub the most convenient way is to generate the repository from a template.
 
 Go to the [documentation-example](https://github.com/coderefinery/documentation-example/generate) project template
 on GitHub and create a copy to your namespace.
@@ -154,6 +148,7 @@ at the top directory of your repository.
 Create that file (if not existing), and add the definition of a new job in it:
 ```{code-block} yaml
 :linenos:
+:emphasize-lines: 4,5
 create-pages:
   image: python:latest
   script:
@@ -167,6 +162,10 @@ create-pages:
 **Step 4**: Enable Pages feature and verify it's running
 `````{tabs}
 ````{group-tab} GitHub
+Note that once the documentation created 
+it is pushed to a separate branch called 'gh-pages'
+(this is what the action `peaceiris/actions-gh-pages` does).
+
 - Go to "Settings" -> "Pages".
 - Under "Build and deployment"
   - In the **Source** section: choose "Deploy from a branch" in the dropdown menu
@@ -175,6 +174,9 @@ create-pages:
 - You should now be able to verify the pages deployment in the "Actions" list 
   ([this is how it looks like](https://github.com/coderefinery/documentation/actions)
   for this lesson material).
+- You can verify that the repository has now a branch named `gh-pages`
+  which contains the generated documentation
+  (and only that).
 ````
 ````{group-tab} GitLab
  With the default settings, on a GitLab server with the Pages feature enabled 
@@ -183,8 +185,10 @@ everything should work. To check:
 - Go to Build -> Pipelines. 
   There should be a running (or complete) pipeline at the top of the list,
   with two stages.
+
   - if you see only one stage, the "Pages" feature might not be active for your repository or for the whole instance 
   - if you see no pipelines, then the CI/CD feature might be disabled, or you might have misnamed the `.gitlab-ci.yml` file.
+
   (the project features can be checked in **Settings**->**General**->***Visibility, project features, permissions**)
 
 ````

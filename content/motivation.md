@@ -1,4 +1,4 @@
-# Motivation
+# Why automated testing? 
 
 ```{objectives}
 - Appreciate the importance of testing software

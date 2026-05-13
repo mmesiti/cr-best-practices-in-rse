@@ -59,15 +59,16 @@ In this episode we will learn how to write good documentation inside your code.
   if temperature > 15:
       print("It is warm")
   ```
-  Instead: You can get this information from `git log` or `git show` or `git
-  annotate` or similar.
+  Instead: You can get this information from `git log`
+  or `git show`,
+  or `git blame` or similar.
 ````
 
 
 ## What are "docstrings" and how can they be useful?
 
-Here is function `fahrenheit_to_celsius` which converts temperature in
-Fahrenheit to Celsius, implemented in a couple of different languages.
+Here is function `fahrenheit_to_celsius` which converts temperature 
+in Fahrenheit to Celsius, implemented in a couple of different languages.
 Your language is missing? Please contribute an example.
 
 The first set of examples uses **regular comments**:

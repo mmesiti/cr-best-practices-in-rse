@@ -1,4 +1,4 @@
-# (Optional) Full-cycle collaborative workflow
+# Testing on software forges: Full collaborative workflow
 
 ```{questions}
 - How can we implement automatic testing each time we push changes to the repository?
@@ -19,12 +19,12 @@ The exercise takes 20-30 minutes.
 
 In this exercise, everybody will:
 
-**A.** Create a repository on GitHub/GitLab (everybody should use a **different repository name** for their repository)
-**B.** Commit code to the repository and set up tests with GitHub Actions/ GitLab CI
-**C.** Everybody will find a bug in their repository and open an issue in their repository
+**A.** Create a repository on GitHub/GitLab (everybody should use a **different repository name** for their repository)  
+**B.** Commit code to the repository and set up tests with GitHub Actions/ GitLab CI  
+**C.** Everybody will find a bug in their repository and open an issue in their repository  
 **D.** Then each one will clone the repo of one of their exercise partners, fix the bug,
-  and open a pull request (GitHub)/ merge request (GitLab)
-**E.** Everybody then merges their co-worker's change
+  and open a pull request (GitHub)/ merge request (GitLab)  
+**E.** Everybody then merges their co-worker's change  
 ```
 
 ```{figure} img/testing_group_work.png
