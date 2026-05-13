@@ -1,5 +1,17 @@
 # Quick Reference
 
+## Glossary
+
+:::{glossary}
+
+linting
+   The act of running a *linter* on your source code,
+   to find potential issues, 
+   like potential misuses/dangerous uses of language features,
+   style violations and so on.
+
+:::
+
 ## Available tools
 
 ### Unit test frameworks

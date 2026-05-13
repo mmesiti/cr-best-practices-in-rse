@@ -158,6 +158,7 @@ ci-misc.md
 :caption: Reference
 
 Shell crash course <https://youtu.be/xbTTDLA3txI>
+quick-reference.md
 exercises.md
 guide.md
 license.md

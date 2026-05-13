@@ -13,7 +13,7 @@ Which typically means:
 - Build and publish your work on the web (including documentation)
 - Run *all* unit and integration tests, and static analysis tools
 - Measure test coverage
-- Check code style and practices (Linting, auto-formatting)
+- Check code style and practices ({term}`Linting <linting>`, auto-formatting)
 
 
 
@@ -85,7 +85,7 @@ What about test coverage?
   - <span style="color:orange">very high</span>
   - remote (merge?)  
     local (sparsely)
-* - linting 
+* - {term}`linting`
   - <span style="color:green">medium</span>
   - <span style="color:blue">low</span>
   - <span style="color:green">medium</span>
@@ -111,6 +111,61 @@ Coverage data is gathered when running a test suite.
 ````
 `````
 
+## Git Hooks
+
+Git has a mechanism to trigger actions when some event happen,
+called [*hooks*](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks).
+
+Most notable hooks:
+
+- `pre-commit`: launches a process when you launch the command `git commit`.
+   If the process terminates with a non-success exit code, 
+   it will prevent you from committing your changes.
+   Typical use cases:
+   
+   - auto formatting and formatting checks
+   - {term}`linting`
+  
+   ```{note}
+   There is a Python framework called [pre-commit](https://pre-commit.com) 
+   created to manage (e.g., install and run) useful pre-commit hooks.
+   ```
+
+- `post-receive`: this hook can be used to launch a process 
+   on the machine where the remote repository is hosted,
+   as a fundamental form of CI.
+   
+   
+
+```````{exercise} Basic CX with hooks
+   
+We can reproduce the fundamental functionality of automation platforms
+by setting up a bare repository on a remote machine
+and the relevant hooks.
+
+
+For this exercise:
+1. clone [this repository](https://gitlab.com/michele.mesiti/cx-course.git):
+
+```
+git clone https://gitlab.com/michele.mesiti/cx-course.git
+```
+
+2. switch to the `hooks` branch
+3. follow the instructions in the 
+   [README](https://gitlab.com/michele.mesiti/cx-course/-/tree/hooks?ref_type=heads).
+
+Start with the "local" version of the exercise,
+then - if you have a remote machine you can connect to via SSH - 
+try the "remote" version.
+
+Note that this simple mechanism is very limited,
+which is why in most cases automation platforms like 
+GitHub actions or Gitlab CI/CD are used.
+
+```````
+
+
 ```{callout} "CI"  and  HPC
 
 Some issues in the development of HPC code 
@@ -123,6 +178,8 @@ are addressed by regularly running jobs that:
 
 This might require "special" set up,
 especially performance benchmarking.
+
+
 ```
 
 
