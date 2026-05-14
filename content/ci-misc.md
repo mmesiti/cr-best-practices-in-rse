@@ -8,7 +8,9 @@ In the past episodes we have seen some examples
 of minimal workflows (testing, documentation).
 
 In this episode we focus on specific features.
-In this repository ([GiHub][cx-examples-GH],[GiLab][cx-examples-GL])
+In the exercise repository 
+(see [link to GiHub version][cx-examples-GH],
+[link to GiLab version][cx-examples-GL])
 a number of examples and exercises have been collected,
 so that you can try different features.
 
@@ -36,7 +38,10 @@ in `.github/workflows`
     - each step can use a pre-defined *action* (see )
       or a script
     - the first step typically is the [checkout action ](https://github.com/marketplace/actions/checkout)
-    - steps are executed one after the other. If a step fails, the job fails
+    - steps are executed one after the other. 
+      If a step fails, 
+      the subsequent steps are not executed,
+      and the job fails.
   - if a job in a workflow fails, then the workflow fails
 - if a workflow fails, then the build is marked as failed.
 
@@ -78,6 +83,20 @@ which will vastly reduce the probability of making trivial mistakes.
 
 ```
 
+```{warning}  
+
+**Exercises on GitHub**: starting workflows manually
+
+To trigger manually the workflows on GitHub
+using your fork of [example repository][cx-examples-GH],
+you might have to switch the default branch 
+to the appropriate one, in "Settings" -> "General" -> "Default Branch".
+
+
+```
+
+
+
 ## A basic pipeline: Compile and run a C program
 
 This example is available in the example repository,
@@ -89,6 +108,28 @@ on the `main` branch.
 ``````{tabs}
 `````{group-tab} GitHub Actions
 
+In this case we have a single job,
+with 3 steps: checkout, build and run.
+
+
+```{code-block} yaml
+name: BasicExample
+on: 
+  - push
+  - workflow_dispatch
+
+jobs:
+  build_and_run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v6
+      - name: "build"
+        run: gcc -o hello ./src/hello.c
+      - name: "run"
+        run: ./hello
+```
+
 
 
 `````
@@ -98,7 +139,7 @@ on the `main` branch.
 In this case we have only one stage 
 (we actually do not have to list it)
 and a single job in that stage that does everything
-in a single step:
+in two steps:
 
 ```{code-block} yaml
 stages: 
@@ -106,7 +147,9 @@ stages:
 
 doall:
   stage: test
-  script: gcc -o hello ./src/hello.c && ./hello
+  script: 
+    - gcc -o hello ./src/hello.c 
+    - ./hello
 ```
 
 `````
@@ -115,7 +158,93 @@ doall:
 ## Failures
 
 
+Proper reporting and propagation of the failure
+of a command in a pipeline or workflow is **paramount**.
+
+**A job not reporting a failure is a severe bug**.
+
+Switch to the branch `failures`.
+
+A common issue is in the shell script 
+`./scripts/doesnt-fail-but-typically-should.sh`.
+
+- How can the issue be fixed?
+- What is the default behaviour of on GitHub or GitLab,
+  when writing the logic in a workflow/pipeline file 
+  instead of a separate shell script?
+
+``````{tabs}
+`````{group-tab} GitHub Actions
+
+`````
+
+`````{group-tab} GitLab CI/CD
+
+Switch to the branch `failures`
+and follow the instructions in the README.
+
+`````
+``````
+
+## Secrets and repository-specific behaviour
+
+In some cases we want to change the behaviour
+of the workflows/pipelines
+depending on the repository.
+
+In other cases, we might want to avoid 
+storing some information under version control
+(it might be not general enough,
+or it might be a secret).
+but it is needed to run workflows or pipelines.
+
+The solution is to use environment variables 
+(also *secrets* on GitHub).
+
+Check out the branch `environment-variables` in the example repository,
+to see how to customize a job 
+by using environment variables
+that are set at the **repository** level. 
+
+
 ## Artifacts
+
+Artifacts are the main way to transfer information 
+between jobs in a GitLab pipeline,
+and from the runner to the GitLab web interface.
+
+
+``````{tabs}
+`````{group-tab} GitHub
+
+`````
+`````{group-tab} GitLab CI/CD
+1. Have a look at the `.gitlab-ci.yml` file
+2. Try to run the pipeline. Does the behaviour depend on the executor type
+   (e.g., docker vs shell)?
+3. Look at the jobs in the web interface (on the left, click on Build -> Jobs).
+   Notice that the `compilation` job 
+   (marked with the `artifact:` key in `.gitlab-ci.yaml`) 
+   will have a "Browse Artifact" button.
+
+```{solution}
+The job named `execution-without-artifact-download` will fail. 
+
+If one uses a self-hosted runner 
+with a `shell` executor for *all* the jobs,
+the artifact might not need to be downloaded
+as it can still live on the filesystem 
+where the runner is located.
+
+*But in this particular case*, since the artifact path 
+is inside the repository
+and the repository gets cleaned at the start of each job,
+the job will not find the necessary file and fail.
+
+```
+
+`````
+``````
 
 ## Code reuse
 
@@ -197,6 +326,11 @@ To set a push mirror, one can use GitHub actions (using the action <https://gith
 A small guide is available in the `github-to-gitlab-mirror` branch
 of the [example repository][cx-examples-GH].
 
+When triggered, the workflow on that branch 
+pushes the current branch of the repository
+to [a mirror on GitLab.com](https://gitlab.com/michele.mesiti/cx-course-mirror-from-github).
+
+
 ```{exercise} Push mirror from GitHub to GitLab
 
 
@@ -215,6 +349,8 @@ It is possible to set up mirroring
 following the official instructions:
 - for [push](https://docs.gitlab.com/ee/user/project/repository/mirror/push.html).
 - for [pull](https://docs.gitlab.com/ee/user/project/repository/mirror/pull.html). This feature might be unavailable.
+
+The [GitHub mirror][cx-examples-GH] and the [KIT GitLab mirror][cx-examples-KIT] are set as a push mirror in the [GitLab repo][cx-examples-GL].
 
 
 `````
