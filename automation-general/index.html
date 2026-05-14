@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automation on Forges and CI &mdash; Best Practices in RSE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Testing on software forges" href="../continuous-integration/" />
+    <link rel="prev" title="Conclusions and recommendations" href="../conclusions/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            Best Practices in RSE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../in-code-documentation/">In-code documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-readme-files/">Writing good README files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sphinx/">Sphinx and Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Popular tools and solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wishlist/">Motivation and wishlist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">Summary</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../motivation/">Why automated testing?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locally/">Testing locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test-design/">Test design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conclusions/">Conclusions and recommendations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Part 2: Automation on Software Forges and CI</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Automation on Forges and CI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#git-hooks">Git Hooks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../continuous-integration/">Testing on software forges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../full-cycle-ci/">Testing on software forges: Full collaborative workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gh_workflow/">Deploying Sphinx documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gh-pages/">Hosting websites/homepages on GitHub Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci-misc/">Other features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci-misc/#self-hosting">Self-hosting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://youtu.be/xbTTDLA3txI">Shell crash course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick-reference/">Quick Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercises/">List of exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/">Instructor guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license/">Credit and license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/lessons/core/">All lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/">CodeRefinery</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/lessons/reusing/">Reusing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Best Practices in RSE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Automation on Forges and CI</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/mmesiti/cr-best-practices-in-rse/blob/main/content/automation-general.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="automation-on-forges-and-ci">
+<h1>Automation on Forges and CI<a class="headerlink" href="#automation-on-forges-and-ci" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="https://github.com/features/actions/">GitHub Actions</a> and <a class="reference external" href="https://docs.gitlab.com/ci/">GitLab CI/CD</a>
+can automatically perform arbitrary operations,
+typically when someone  <code class="docutils literal notranslate"><span class="pre">push</span></code>es to a repository.</p>
+<p>These are used for:</p>
+<ul class="simple">
+<li><p>gatekeeping/enforcing coding standard on contributions from others</p></li>
+<li><p>parts of the development cycle that do not fit on the machine you use to develop code.</p></li>
+</ul>
+<p>Which typically means:</p>
+<ul class="simple">
+<li><p>Build and publish your work on the web (including documentation)</p></li>
+<li><p>Run <em>all</em> unit and integration tests, and static analysis tools</p></li>
+<li><p>Measure test coverage</p></li>
+<li><p>Check code style and practices (<a class="reference internal" href="../quick-reference/#term-linting"><span class="xref std std-term">Linting</span></a>, auto-formatting)</p></li>
+</ul>
+<div class="admonition-feedback-loops-in-software-development discussion important admonition" id="discussion-0">
+<p class="admonition-title">Feedback loops in Software Development</p>
+<p>Consider these activities we can perform on a software project:</p>
+<ul class="simple">
+<li><p>type checks</p></li>
+<li><p>incremental compilation</p></li>
+<li><p>full compilation</p></li>
+<li><p>test suite (unit)</p></li>
+<li><p>test suite (end-to-end)</p></li>
+<li><p>linting</p></li>
+<li><p>code format check</p></li>
+<li><p>building documentation</p></li>
+<li><p>spell checking</p></li>
+</ul>
+<p>For each of these activities:</p>
+<ul class="simple">
+<li><p>How much information can it give us while developing software?</p></li>
+<li><p>How “expensive” is it?</p></li>
+<li><p>How important is it?</p></li>
+<li><p>Should it be done on a software forge, or on the machine
+where you develop?</p></li>
+<li><p>How often should it be performed?</p></li>
+</ul>
+<p>What about test coverage?</p>
+<div class="admonition-writer-s-recommendation-but-let-us-discuss-first solution important dropdown admonition" id="solution-0">
+<p class="admonition-title">Writer’s recommendation (but let us discuss first)</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Urgency and Importance of Practices in Software Development</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head stub"><p><strong>Practice</strong></p></th>
+<th class="head"><p><strong>Information Gain</strong></p></th>
+<th class="head"><p><strong>Time Cost</strong></p></th>
+<th class="head"><p><strong>Importance</strong></p></th>
+<th class="head"><p><strong>Where and When?</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>type checks</p></th>
+<td><p><span style="color:green"> medium </span></p></td>
+<td><p><span style="color:blue">low</span></p></td>
+<td><p><span style="color:blue">low</span></p></td>
+<td><p>local, remote<br />
+(commit hooks?)</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>incremental<br />
+compilation</p></th>
+<td><p><span style="color:green"> medium </span></p></td>
+<td><p><span style="color:blue">low</span></p></td>
+<td><p><span style="color:blue">low</span></p></td>
+<td><p>local</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>full compilation</p></th>
+<td><p><span style="color:green"> medium </span></p></td>
+<td><p><span style="color:red">high</span></p></td>
+<td><p><span style="color:red">high</span></p></td>
+<td><p>remote (local)</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>test suite (unit)</p></th>
+<td><p><span style="color:green"> medium </span></p></td>
+<td><p><span style="color:red">high</span></p></td>
+<td><p><span style="color:orange">very high</span></p></td>
+<td><p>local,remote</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>test suite<br />
+(end-to-end)</p></th>
+<td><p><span style="color:red">high</span></p></td>
+<td><p><span style="color:red">high</span></p></td>
+<td><p><span style="color:orange">very high</span></p></td>
+<td><p>remote (merge?)<br />
+local (sparsely)</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p><a class="reference internal" href="../quick-reference/#term-linting"><span class="xref std std-term">linting</span></a></p></th>
+<td><p><span style="color:green">medium</span></p></td>
+<td><p><span style="color:blue">low</span></p></td>
+<td><p><span style="color:green">medium</span></p></td>
+<td><p>local, remote<br />
+(commit hooks)</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>building<br />
+documentation</p></th>
+<td><p><span style="color:blue">low</span></p></td>
+<td><p><span style="color:green">medium</span></p></td>
+<td><p><span style="color:red">high</span></p></td>
+<td><p>remote</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>spell check</p></th>
+<td><p><span style="color:blue">low</span></p></td>
+<td><p><span style="color:blue">low</span></p></td>
+<td><p><span style="color:green">medium</span></p></td>
+<td><p>remote (local)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Typically test coverage measurement and display can be performed remotely.
+Coverage data is gathered when running a test suite.</p>
+</div>
+</div>
+<section id="git-hooks">
+<h2>Git Hooks<a class="headerlink" href="#git-hooks" title="Link to this heading"></a></h2>
+<p>Git has a mechanism to trigger actions when some event happen,
+called <a class="reference external" href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks"><em>hooks</em></a>.</p>
+<p>Most notable hooks:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>: launches a process when you launch the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code>.
+If the process terminates with a non-success exit code,
+it will prevent you from committing your changes.
+Typical use cases:</p>
+<ul class="simple">
+<li><p>auto formatting and formatting checks</p></li>
+<li><p><a class="reference internal" href="../quick-reference/#term-linting"><span class="xref std std-term">linting</span></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is a Python framework called <a class="reference external" href="https://pre-commit.com">pre-commit</a>
+created to manage (e.g., install and run) useful pre-commit hooks.</p>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">post-receive</span></code>: this hook can be used to launch a process
+on the machine where the remote repository is hosted,
+as a fundamental form of CI.</p></li>
+</ul>
+<div class="admonition-basic-cx-with-hooks exercise important admonition" id="exercise-0">
+<p class="admonition-title">Basic CX with hooks</p>
+<p>We can reproduce the fundamental functionality of automation platforms
+by setting up a bare repository on a remote machine
+and the relevant hooks.</p>
+<p>For this exercise:</p>
+<ol class="arabic simple">
+<li><p>clone <a class="reference external" href="https://gitlab.com/michele.mesiti/cx-course.git">this repository</a>:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gitlab</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">michele</span><span class="o">.</span><span class="n">mesiti</span><span class="o">/</span><span class="n">cx</span><span class="o">-</span><span class="n">course</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>switch to the <code class="docutils literal notranslate"><span class="pre">hooks</span></code> branch</p></li>
+<li><p>follow the instructions in the
+<a class="reference external" href="https://gitlab.com/michele.mesiti/cx-course/-/tree/hooks?ref_type=heads">README</a>.</p></li>
+</ol>
+<p>Start with the “local” version of the exercise,
+then - if you have a remote machine you can connect to via SSH -
+try the “remote” version.</p>
+<p>Note that this simple mechanism is very limited,
+which is why in most cases automation platforms like
+GitHub actions or Gitlab CI/CD are used.</p>
+</div>
+<div class="admonition-ci-and-hpc callout admonition" id="callout-0">
+<p class="admonition-title">“CI”  and  HPC</p>
+<p>Some issues in the development of HPC code
+are addressed by regularly running jobs that:</p>
+<ul class="simple">
+<li><p>Test compilation with different compilers and libraries (e.g., MPIs, CUDA/ROCm, …)</p></li>
+<li><p>Test and <strong>benchmark the performance</strong> on specific hardware and infrastructure</p></li>
+<li><p>build/package software for various compilers, MPI versions, architectures</p></li>
+<li><p>… all using standardized environments in conjunction with containers</p></li>
+</ul>
+<p>This might require “special” set up,
+especially performance benchmarking.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../conclusions/" class="btn btn-neutral float-left" title="Conclusions and recommendations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../continuous-integration/" class="btn btn-neutral float-right" title="Testing on software forges" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright CodeRefinery contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

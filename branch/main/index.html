@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Best practices in Research Software Engineering &mdash; Best Practices in RSE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=187304be"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex/" />
+    <link rel="search" title="Search" href="search/" />
+    <link rel="next" title="In-code documentation" href="in-code-documentation/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Best Practices in RSE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="in-code-documentation/">In-code documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-readme-files/">Writing good README files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx/">Sphinx and Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools/">Popular tools and solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wishlist/">Motivation and wishlist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary/">Summary</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="motivation/">Why automated testing?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locally/">Testing locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test-design/">Test design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusions/">Conclusions and recommendations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Part 2: Automation on Software Forges and CI</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="automation-general/">Automation on Forges and CI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="continuous-integration/">Testing on software forges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full-cycle-ci/">Testing on software forges: Full collaborative workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gh_workflow/">Deploying Sphinx documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gh-pages/">Hosting websites/homepages on GitHub Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci-misc/">Other features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci-misc/#self-hosting">Self-hosting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://youtu.be/xbTTDLA3txI">Shell crash course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-reference/">Quick Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exercises/">List of exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/">Instructor guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license/">Credit and license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/lessons/core/">All lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/">CodeRefinery</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/lessons/reusing/">Reusing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Best Practices in RSE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Best practices in Research Software Engineering</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/mmesiti/cr-best-practices-in-rse/blob/main/content/index.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="best-practices-in-research-software-engineering">
+<h1>Best practices in Research Software Engineering<a class="headerlink" href="#best-practices-in-research-software-engineering" title="Link to this heading"></a></h1>
+<p>In this course we will discuss
+some tools and practices
+useful in software development
+(in particular, Research Software Engineering).</p>
+<p>The material is derived from the CodeRefinery lessons
+(<a class="reference external" href="https://coderefinery.github.io/documentation">documentation</a>
+and <a class="reference external" href="https://coderefinery.github.io/testing">testing</a>)
+and prepared for the NHR Summer School in Karlsruhe.</p>
+<p>This material is divided in two parts:</p>
+<ul class="simple">
+<li><p>In the first part, we will see tools
+and best practices to write
+automated tests for our code,
+and to write and maintain
+its documentation</p></li>
+<li><p>In the second part,
+which tries to be as independent from the first as possible,
+we will see how to increase automation,
+by making use of infrastructure
+offered on software forges
+GitHub and GitLab.</p></li>
+</ul>
+<div class="admonition-prerequisites prerequisites admonition" id="prerequisites-0">
+<p class="admonition-title">Prerequisites</p>
+<ol class="arabic simple">
+<li><p>Basic understanding of Git.</p></li>
+<li><p>For the Sphinx part, You need to have
+<a class="reference external" href="https://www.sphinx-doc.org">sphinx</a> and <a class="reference external" href="https://sphinx-rtd-theme.readthedocs.io/">sphinx_rtd_theme</a> installed
+(they are part of the <a class="reference external" href="https://coderefinery.github.io/installation/conda-environment/">coderefinery environment</a>).</p></li>
+<li><p>You need <code class="docutils literal notranslate"><span class="pre">pytest</span></code> <a class="reference external" href="http://doc.pytest.org">http://doc.pytest.org</a> (as part of Anaconda or Miniconda or Virtual Environment).</p></li>
+<li><p>(Optional) To work on exercises in other languages than Python,
+please follow the instructions under “Language-specific
+instructions” in the <code class="docutils literal notranslate"><span class="pre">Test</span> <span class="pre">design</span> <span class="pre">episode</span> <span class="pre">&lt;https://coderefinery.github.io/testing/test-design/&gt;</span></code>__
+to install the recommended testing frameworks.</p></li>
+</ol>
+<p>If you wish to follow in the terminal and are new to the command line,
+CodeRefinery has recorded a <a class="reference external" href="https://youtu.be/xbTTDLA3txI">short shell crash course</a>.</p>
+</div>
+<section id="part-1-best-practices-in-research-software-engineering">
+<h2>Part 1: Best practices in Research Software Engineering<a class="headerlink" href="#part-1-best-practices-in-research-software-engineering" title="Link to this heading"></a></h2>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h3>
+<p>In this lesson we will discuss different solutions for implementing and
+deploying code documentation.
+This demonstration will be mostly <strong>independent of programming languages</strong>
+You will be able to follow and do all the exercises
+using the <a class="reference external" href="https://coderefinery.github.io/installation/conda/">CodeRefinery conda environment</a>).</p>
+<p>Then we will discuss the form of documentation which is the most immediate to write:
+<strong>in-code</strong> comments, and docstrings.</p>
+<p>We will step up our game and discuss <strong>what makes a good README</strong>. For many
+projects, a curated README is enough.</p>
+<p>We will then learn how to build documentation with the
+<strong>documentation generator</strong> <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a>.</p>
+<p>We will discuss best practices, and briefly discuss the available tools.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="in-code-documentation/">In-code documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-readme-files/">Writing good README files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx/">Sphinx and Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools/">Popular tools and solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wishlist/">Motivation and wishlist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary/">Summary</a></li>
+</ul>
+</div>
+</section>
+<section id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h3>
+<p>Have you ever had some of these problems?:</p>
+<ul class="simple">
+<li><p>You change B and C, and suddenly A doesn’t work anymore.  Time
+wasted trying to figure out what changed.</p></li>
+<li><p>There was some simple problem, systematically testing could have
+found it.</p></li>
+<li><p>You get someone else’s code and are afraid to touch it because who
+knows what might break.  Plot twist: it’s your own code!</p></li>
+</ul>
+<p>People have learned that some automatic way
+to check problems makes
+software development much easier.<br />
+This part of the lesson will talk
+about the places it’s useful for research code,
+and how easy it can be.
+We will discuss why testing often needs
+to be part of the software development cycle
+and how such a cycle can be implemented.
+We will see how automated testing works
+and practice designing and writing tests.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="motivation/">Why automated testing?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locally/">Testing locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test-design/">Test design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusions/">Conclusions and recommendations</a></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+<section id="part-2-automation-on-forges-and-ci">
+<h1>Part 2: Automation on Forges and CI<a class="headerlink" href="#part-2-automation-on-forges-and-ci" title="Link to this heading"></a></h1>
+<p>Platforms like GitHub and GitLab offer services
+that can be used to automate parts of software
+development and maintenance.</p>
+<p>We will see how to</p>
+<ul class="simple">
+<li><p>trigger remote pipelines</p></li>
+<li><p>run automatically
+the test suite of our code</p></li>
+<li><p>deploy documentation to <a class="reference external" href="https://pages.github.com">GitHub Pages</a>
+and <a class="reference external" href="https://about.gitlab.com/features/pages/">GitLab Pages</a>.</p></li>
+</ul>
+<p>We will also discuss other possibilities
+these automation platform offers,
+and some additional, useful features.</p>
+<div class="admonition-prerequisites prerequisites admonition" id="prerequisites-1">
+<p class="admonition-title">Prerequisites</p>
+<p>You need an account on the forge you intend to use (GitHub.com, or a GitLab server of your choice).</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Part 2: Automation on Software Forges and CI</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="automation-general/">Automation on Forges and CI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="continuous-integration/">Testing on software forges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full-cycle-ci/">Testing on software forges: Full collaborative workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gh_workflow/">Deploying Sphinx documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gh-pages/">Hosting websites/homepages on GitHub Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci-misc/">Other features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci-misc/#self-hosting">Self-hosting</a></li>
+</ul>
+</div>
+<section id="other-material">
+<h2>Other Material<a class="headerlink" href="#other-material" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://youtu.be/xbTTDLA3txI">Shell crash course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-reference/">Quick Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exercises/">List of exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/">Instructor guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license/">Credit and license</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/lessons/core/">All lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/">CodeRefinery</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/lessons/reusing/">Reusing</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="in-code-documentation/" class="btn btn-neutral float-right" title="In-code documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright CodeRefinery contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Other features &mdash; Best Practices in RSE  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_lesson.css?v=e9df6548" />
+      <link rel="stylesheet" type="text/css" href="../_static/term_role_formatting.css?v=4194e21c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx_rtd_theme_ext_color_contrast.css?v=8e8ea19f" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=187304be"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/minipres.js?v=a0d29692"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../_static/togglebutton.js?v=b8b12719"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script src="../_static/tabs.js?v=3030b3cb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex/" />
+    <link rel="search" title="Search" href="../search/" />
+    <link rel="next" title="Quick Reference" href="../quick-reference/" />
+    <link rel="prev" title="Hosting websites/homepages on GitHub Pages" href="../gh-pages/" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../" class="icon icon-home">
+            Best Practices in RSE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../in-code-documentation/">In-code documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../writing-readme-files/">Writing good README files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sphinx/">Sphinx and Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/">Popular tools and solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wishlist/">Motivation and wishlist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../summary/">Summary</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../motivation/">Why automated testing?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../locally/">Testing locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test-design/">Test design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conclusions/">Conclusions and recommendations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Part 2: Automation on Software Forges and CI</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../automation-general/">Automation on Forges and CI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../continuous-integration/">Testing on software forges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../full-cycle-ci/">Testing on software forges: Full collaborative workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gh_workflow/">Deploying Sphinx documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gh-pages/">Hosting websites/homepages on GitHub Pages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Other features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-ideas">General ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-basic-pipeline-compile-and-run-a-c-program">A basic pipeline: Compile and run a C program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#failures">Failures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#secrets-and-repository-specific-behaviour">Secrets and repository-specific behaviour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#artifacts">Artifacts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-reuse">Code reuse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parametric-tasks-matrix">Parametric tasks: Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mirroring">Mirroring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conditional-execution-of-workflows-jobs-and-pipelines">Conditional execution of workflows, jobs and pipelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#self-hosting">Self-hosting</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://youtu.be/xbTTDLA3txI">Shell crash course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quick-reference/">Quick Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercises/">List of exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/">Instructor guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license/">Credit and license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/lessons/core/">All lessons</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/">CodeRefinery</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://coderefinery.org/lessons/reusing/">Reusing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../">Best Practices in RSE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Other features</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/mmesiti/cr-best-practices-in-rse/blob/main/content/ci-misc.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="other-features">
+<h1>Other features<a class="headerlink" href="#other-features" title="Link to this heading"></a></h1>
+<div class="admonition-objectives objectives admonition" id="objectives-0">
+<p class="admonition-title">Objectives</p>
+<ul class="simple">
+<li><p>Have an idea of what is possible to do with actions or CI, and how</p></li>
+</ul>
+</div>
+<p>In the past episodes we have seen some examples
+of minimal workflows (testing, documentation).</p>
+<p>In this episode we focus on specific features.
+In the exercise repository
+(see <a class="reference external" href="https://github.com/mmesiti/cx-course">link to GiHub version</a>,
+<a class="reference external" href="https://gitlab.com/michele.mesiti/cx-course">link to GiLab version</a>)
+a number of examples and exercises have been collected,
+so that you can try different features.</p>
+<p>Fork it on the platform you prefer.</p>
+<section id="general-ideas">
+<h2>General ideas<a class="headerlink" href="#general-ideas" title="Link to this heading"></a></h2>
+<p>Basic ideas for GitHub Actions and Gitlab CI/CD.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-R2l0SHViIEFjdGlvbnM=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tab" tabindex="0">GitHub Actions</button><button aria-controls="panel-0-R2l0TGFiIENJL0NE" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tab" tabindex="-1">GitLab CI/CD</button></div><div aria-labelledby="tab-0-R2l0SHViIEFjdGlvbnM=" class="sphinx-tabs-panel group-tab" id="panel-0-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tabpanel" tabindex="0"><p>The workflow are defined in <code class="docutils literal notranslate"><span class="pre">yaml</span></code> files
+in <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code>
+(one file - one workflow)</p>
+<ul class="simple">
+<li><p>Typically each push triggers the <strong>workflow</strong>s
+<a class="reference external" href="https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs">unless skipped</a></p></li>
+<li><p>Each workflow has</p>
+<ul>
+<li><p>a list of event triggers (typically <code class="docutils literal notranslate"><span class="pre">push</span></code>, but others are possible,
+for example <code class="docutils literal notranslate"><span class="pre">workflow_dispatch</span></code>
+which is necessary to launch the workflow manually)</p></li>
+<li><p>a list of jobs, that run independently, made of steps</p>
+<ul>
+<li><p>each job has a list of steps that run one after another</p></li>
+<li><p>steps runs on the same “machine” and share data and context</p></li>
+<li><p>each step can use a pre-defined <em>action</em> (see )
+or a script</p></li>
+<li><p>the first step typically is the <a class="reference external" href="https://github.com/marketplace/actions/checkout">checkout action </a></p></li>
+<li><p>steps are executed one after the other.
+If a step fails,
+the subsequent steps are not executed,
+and the job fails.</p></li>
+</ul>
+</li>
+<li><p>if a job in a workflow fails, then the workflow fails</p></li>
+</ul>
+</li>
+<li><p>if a workflow fails, then the build is marked as failed.</p></li>
+</ul>
+</div><div aria-labelledby="tab-0-R2l0TGFiIENJL0NE" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tabpanel" tabindex="0"><p>By default, The pipeline and all its jobs are defined
+in a file named <code class="docutils literal notranslate"><span class="pre">.gitlab-ci.yml</span></code>
+at the root of the repository.</p>
+<ul class="simple">
+<li><p>Each push triggers a new <strong>pipeline</strong>
+(<a class="reference external" href="https://docs.gitlab.com/ee/ci/pipelines/#skip-a-pipeline">unless skipped</a>)</p></li>
+<li><p>Each pipeline consist of <strong>stages</strong>.<br />
+Predefined <a class="reference external" href="https://docs.gitlab.com/ci/yaml/#stages">stages</a>:
+<code class="docutils literal notranslate"><span class="pre">build</span></code>, <code class="docutils literal notranslate"><span class="pre">test</span></code>, <code class="docutils literal notranslate"><span class="pre">deploy</span></code>, (plus <code class="docutils literal notranslate"><span class="pre">.pre</span></code> and <code class="docutils literal notranslate"><span class="pre">.post</span></code>)</p></li>
+<li><p>Stages run in sequence</p></li>
+<li><p>Working tree is typically automatically <strong>checked out</strong> at the appropriate commit
+and <strong>cleaned up</strong> between stages: Use <strong>artifacts</strong> to keep files</p></li>
+<li><p>Each stage consist of <strong>jobs</strong></p>
+<ul>
+<li><p>Jobs in the same stage can run in parallel</p></li>
+<li><p>If a job fails then the stage fails, and all subsequent stages are skipped</p></li>
+<li><p>If a stage fails then the pipeline fails</p></li>
+</ul>
+</li>
+</ul>
+</div></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Editing workflow and pipeline files</strong></p>
+<p>Whenever you want to edit a file that defines a workflow (on GitHub)
+or a pipeline (on GitLab)
+consider doing this directly on the web interface,
+as the build-in editors have a linter and autocompletion
+which will vastly reduce the probability of making trivial mistakes.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Exercises on GitHub</strong>: starting workflows manually</p>
+<p>To trigger manually the workflows on GitHub
+using your fork of <a class="reference external" href="https://github.com/mmesiti/cx-course">example repository</a>,
+you might have to switch the default branch
+to the appropriate one, in “Settings” -&gt; “General” -&gt; “Default Branch”.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Email notifications</strong></p>
+<p>Both GitHub and GitLab are eager to send you emails
+when a workflow or pipeline fails.</p>
+<p>While this is in most case very useful,
+consider disabling email notifications on the repository
+you use for the exercises during this session.</p>
+</div>
+</section>
+<section id="a-basic-pipeline-compile-and-run-a-c-program">
+<h2>A basic pipeline: Compile and run a C program<a class="headerlink" href="#a-basic-pipeline-compile-and-run-a-c-program" title="Link to this heading"></a></h2>
+<p>This example is available in the example repository,
+on the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-R2l0SHViIEFjdGlvbnM=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tab" tabindex="0">GitHub Actions</button><button aria-controls="panel-1-R2l0TGFiIENJL0NE" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tab" tabindex="-1">GitLab CI/CD</button></div><div aria-labelledby="tab-1-R2l0SHViIEFjdGlvbnM=" class="sphinx-tabs-panel group-tab" id="panel-1-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tabpanel" tabindex="0"><p>In this case we have a single job,
+with 3 steps: checkout, build and run.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BasicExample</span>
+<span class="nt">on</span><span class="p">:</span><span class="w"> </span>
+<span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">push</span><span class="w">                                  </span><span class="c1"># the workflow runs when we push</span>
+</span><span class="hll"><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">workflow_dispatch</span><span class="w">                     </span><span class="c1"># we can launch the workflow manually</span>
+</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">build_and_run</span><span class="p">:</span>
+<span class="hll"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span><span class="w">                </span><span class="c1"># This is necessary, </span>
+</span><span class="w">                                          </span><span class="c1"># specifies the kind of host where to run</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Checkout&quot;</span>
+<span class="hll"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v6</span><span class="w">         </span><span class="c1"># We use a pre-defined *action*</span>
+</span><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;build&quot;</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcc -o hello ./src/hello.c</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;run&quot;</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./hello</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">runs-on</span></code> takes one or more labels of a runner,
+and identifies the type of host.</p>
+</div><div aria-labelledby="tab-1-R2l0TGFiIENJL0NE" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tabpanel" tabindex="0"><p>In this case we have only one stage
+(we actually do not have to list it)
+and a single job in that stage that does everything
+in two steps:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">stages</span><span class="p">:</span><span class="w"> </span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test</span>
+
+<span class="nt">doall</span><span class="p">:</span>
+<span class="hll"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu:latest</span>
+</span><span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test</span>
+<span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcc -o hello ./src/hello.c</span><span class="w"> </span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./hello</span>
+</pre></div>
+</div>
+<p>Note: if we do not specify an <code class="docutils literal notranslate"><span class="pre">image:</span></code>,
+then a default one will be chosen.
+When we specify one,
+it is downloaded from a registry (typically, dockerhub).</p>
+</div></div>
+</section>
+<section id="failures">
+<h2>Failures<a class="headerlink" href="#failures" title="Link to this heading"></a></h2>
+<p>Proper reporting and propagation of the failure
+of a command in a pipeline or workflow is <strong>paramount</strong>.</p>
+<p><strong>A CI job not properly reporting a failure is itself a severe bug</strong>.</p>
+<p>Switch to the branch <code class="docutils literal notranslate"><span class="pre">failures</span></code>.</p>
+<p>The shell script
+<code class="docutils literal notranslate"><span class="pre">./scripts/doesnt-fail-but-typically-should.sh</span></code>
+shows a typical pitfall.</p>
+<ul class="simple">
+<li><p>How can the problem be fixed?</p></li>
+<li><p>What is the default behaviour of on GitHub or GitLab,
+when writing the logic in a workflow/pipeline file
+instead of a separate shell script?</p></li>
+</ul>
+<p>Switch to the branch <code class="docutils literal notranslate"><span class="pre">failures</span></code>
+and follow the instructions in the README,
+and have a look at the workflow/pipeline definition file.</p>
+</section>
+<section id="secrets-and-repository-specific-behaviour">
+<h2>Secrets and repository-specific behaviour<a class="headerlink" href="#secrets-and-repository-specific-behaviour" title="Link to this heading"></a></h2>
+<p>In some cases we want to change the behaviour
+of the workflows/pipelines
+depending on the repository.</p>
+<p>In other cases, we might want to avoid
+storing some information under version control
+(it might be not general enough,
+or it might be a secret).
+but it is needed to run workflows or pipelines.</p>
+<p>The solution is to use environment variables
+(also <em>secrets</em> on GitHub).</p>
+<p>Check out the branch <code class="docutils literal notranslate"><span class="pre">environment-variables</span></code> in the example repository,
+to see how to customize a job
+by using environment variables
+that are set at the <strong>repository</strong> level.</p>
+</section>
+<section id="artifacts">
+<h2>Artifacts<a class="headerlink" href="#artifacts" title="Link to this heading"></a></h2>
+<p>Artifacts are the main way to transfer information
+between jobs in a GitLab pipeline,
+and from the runner to the GitLab web interface.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-R2l0SHVi" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-R2l0SHVi" name="R2l0SHVi" role="tab" tabindex="0">GitHub</button><button aria-controls="panel-2-R2l0TGFiIENJL0NE" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tab" tabindex="-1">GitLab CI/CD</button></div><div aria-labelledby="tab-2-R2l0SHVi" class="sphinx-tabs-panel group-tab" id="panel-2-R2l0SHVi" name="R2l0SHVi" role="tabpanel" tabindex="0"></div><div aria-labelledby="tab-2-R2l0TGFiIENJL0NE" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tabpanel" tabindex="0"><ol class="arabic simple">
+<li><p>Have a look at the <code class="docutils literal notranslate"><span class="pre">.gitlab-ci.yml</span></code> file</p></li>
+<li><p>Try to run the pipeline. Does the behaviour depend on the executor type
+(e.g., docker vs shell)?</p></li>
+<li><p>Look at the jobs in the web interface (on the left, click on Build -&gt; Jobs).
+Notice that the <code class="docutils literal notranslate"><span class="pre">compilation</span></code> job
+(marked with the <code class="docutils literal notranslate"><span class="pre">artifact:</span></code> key in <code class="docutils literal notranslate"><span class="pre">.gitlab-ci.yaml</span></code>)
+will have a “Browse Artifact” button.</p></li>
+</ol>
+<div class="admonition-solution solution important dropdown admonition" id="solution-0">
+<p class="admonition-title">Solution</p>
+<p>The job named <code class="docutils literal notranslate"><span class="pre">execution-without-artifact-download</span></code> will fail.</p>
+<p>If one uses a self-hosted runner
+with a <code class="docutils literal notranslate"><span class="pre">shell</span></code> executor for <em>all</em> the jobs,
+the artifact might not need to be downloaded
+as it can still live on the filesystem
+where the runner is located.</p>
+<p><em>But in this particular case</em>, since the artifact path
+is inside the repository
+and the repository gets cleaned at the start of each job,
+the job will not find the necessary file and fail.</p>
+</div>
+</div></div>
+</section>
+<section id="code-reuse">
+<h2>Code reuse<a class="headerlink" href="#code-reuse" title="Link to this heading"></a></h2>
+<p>When creating a large workflow or pipeline,
+we might be tempted to copy/paste the job definition.
+What alternatives do we have?</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-R2l0SHViIEFjdGlvbnM=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tab" tabindex="0">GitHub Actions</button><button aria-controls="panel-3-R2l0TGFiIENJL0NE" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tab" tabindex="-1">GitLab CI/CD</button></div><div aria-labelledby="tab-3-R2l0SHViIEFjdGlvbnM=" class="sphinx-tabs-panel group-tab" id="panel-3-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tabpanel" tabindex="0"><p><a class="reference external" href="https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#anchors">YAML anchors</a>
+also work on GitHub actions (with some limitations compared to GitLab).</p>
+<p>In the GitHub context,
+actions themselves are the main building block,
+and they are reusable by default.</p>
+</div><div aria-labelledby="tab-3-R2l0TGFiIENJL0NE" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tabpanel" tabindex="0"><ul class="simple">
+<li><p>Checkout branch <code class="docutils literal notranslate"><span class="pre">templates</span></code></p></li>
+<li><p>have a look at the <code class="docutils literal notranslate"><span class="pre">.gitlab-ci.yml</span></code> file,
+notice the use of <code class="docutils literal notranslate"><span class="pre">.greet-base</span></code> and of the <code class="docutils literal notranslate"><span class="pre">extends:</span></code> key</p></li>
+<li><p>How can the base job be customized?</p></li>
+</ul>
+<p>See also: <a class="reference external" href="https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#anchors">yaml anchors</a></p>
+<p>Another more sophisticated way to reuse code
+are <a class="reference external" href="https://docs.gitlab.com/ci/components/">components</a>,
+which follow a philosophy similar to actions
+in the GitHub context.</p>
+</div></div>
+<p><a class="reference internal" href="#parametric-jobs"><span class="std std-ref">Parametric tasks</span></a>
+are also a way to “reuse” code,
+or at least to avoid code duplication.</p>
+</section>
+<section id="parametric-tasks-matrix">
+<span id="parametric-jobs"></span><h2>Parametric tasks: Matrix<a class="headerlink" href="#parametric-tasks-matrix" title="Link to this heading"></a></h2>
+<p>Sometimes you might want to run the same job for many different “cases”,
+or parameters (e.g., different versions of a library/dependency/compiler).</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-4-R2l0SHViIEFjdGlvbnM=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tab" tabindex="0">GitHub Actions</button><button aria-controls="panel-4-R2l0TGFiIENJL0NE" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-4-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tab" tabindex="-1">GitLab CI/CD</button></div><div aria-labelledby="tab-4-R2l0SHViIEFjdGlvbnM=" class="sphinx-tabs-panel group-tab" id="panel-4-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tabpanel" tabindex="0"><p>Different variations of a job in a workflow
+can be run by using a <a class="reference external" href="https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations">matrix strategy</a>.</p>
+</div><div aria-labelledby="tab-4-R2l0TGFiIENJL0NE" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tabpanel" tabindex="0"><p>Different variations of a job in a workflow can be run in parallel
+(or queued, if necessary)
+using the <a class="reference external" href="https://docs.gitlab.com/ci/yaml/#parallelmatrix">parallel:matrix</a>
+feature.</p>
+<p>For an example and practice, see the [exercise repository][cx-example-GL] on the <code class="docutils literal notranslate"><span class="pre">matrix</span></code> branch.</p>
+</div></div>
+</section>
+<section id="mirroring">
+<span id="mirrors"></span><h2>Mirroring<a class="headerlink" href="#mirroring" title="Link to this heading"></a></h2>
+<p>A <em>Mirror</em> is a copy of a repository
+that is kept <em>automatically</em> in sync
+while being, typically, on a different forge,
+to take advantages of different features,
+or reach different communities.</p>
+<p>There are 2 possible techniques:</p>
+<ul class="simple">
+<li><p><em>Pull</em>: the “mirror” repository is configured
+to automatically pull from the original at regular intervals.
+This is typically a “premium”  feature,
+as it is generally inefficient (<em>polling</em>).</p></li>
+<li><p><em>Push</em>: the original repository is configured
+to automatically push to the “mirror” whenever there are changes.
+This is typically more efficient.</p></li>
+</ul>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-5-R2l0SHViIEFjdGlvbnM=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tab" tabindex="0">GitHub Actions</button><button aria-controls="panel-5-R2l0TGFiIENJL0NE" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tab" tabindex="-1">GitLab CI/CD</button></div><div aria-labelledby="tab-5-R2l0SHViIEFjdGlvbnM=" class="sphinx-tabs-panel group-tab" id="panel-5-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tabpanel" tabindex="0"><p>To set a push mirror, one can use GitHub actions (using the action <a class="reference external" href="https://github.com/wangchucheng/git-repo-sync">https://github.com/wangchucheng/git-repo-sync</a>)</p>
+<p>A small guide is available in the <code class="docutils literal notranslate"><span class="pre">github-to-gitlab-mirror</span></code> branch
+of the <a class="reference external" href="https://github.com/mmesiti/cx-course">example repository</a>.</p>
+<p>When triggered, the workflow on that branch
+pushes the current branch of the repository
+to <a class="reference external" href="https://gitlab.com/michele.mesiti/cx-course-mirror-from-github">a mirror on GitLab.com</a>.</p>
+<div class="admonition-push-mirror-from-github-to-gitlab exercise important admonition" id="exercise-0">
+<p class="admonition-title">Push mirror from GitHub to GitLab</p>
+<ol class="arabic simple">
+<li><p>Fork the <a class="reference external" href="https://github.com/mmesiti/cx-course">example repository</a> on GitHub.</p></li>
+<li><p>Create and empty repository on a GitLab server (tip: disable notifications)</p></li>
+<li><p>Checkout the <code class="docutils literal notranslate"><span class="pre">github-to-gitlab-mirror</span></code> branch in the example repo</p></li>
+<li><p>Follow the instructions in the README.md to set up the mirroring</p></li>
+</ol>
+</div>
+</div><div aria-labelledby="tab-5-R2l0TGFiIENJL0NE" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tabpanel" tabindex="0"><p>It is possible to set up mirroring
+following the official instructions:</p>
+<ul class="simple">
+<li><p>for <a class="reference external" href="https://docs.gitlab.com/ee/user/project/repository/mirror/push.html">push</a>.</p></li>
+<li><p>for <a class="reference external" href="https://docs.gitlab.com/ee/user/project/repository/mirror/pull.html">pull</a>. This feature might be unavailable.</p></li>
+</ul>
+<p>The <a class="reference external" href="https://github.com/mmesiti/cx-course">GitHub mirror</a> and the [KIT GitLab mirror][cx-examples-KIT] are set as a push mirror in the <a class="reference external" href="https://gitlab.com/michele.mesiti/cx-course">GitLab repo</a>.</p>
+</div></div>
+</section>
+<section id="conditional-execution-of-workflows-jobs-and-pipelines">
+<h2>Conditional execution of workflows, jobs and pipelines<a class="headerlink" href="#conditional-execution-of-workflows-jobs-and-pipelines" title="Link to this heading"></a></h2>
+<p>On both platforms
+it is possible to make so that the execution of the jobs, steps
+or of the full workflow
+is dependent on some conditions.</p>
+<p>Typical cases are:</p>
+<ul class="simple">
+<li><p>Always: force the execution of jobs/steps no matter what</p></li>
+<li><p>Only in case of a merge</p></li>
+<li><p>Only in case of a tagged commit</p></li>
+<li><p>Only on a particular branch</p></li>
+<li><p>based on expressions involving environment variables</p></li>
+<li><p>only when some files are changed</p></li>
+</ul>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-6-R2l0SHViIEFjdGlvbnM=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-6-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tab" tabindex="0">GitHub Actions</button><button aria-controls="panel-6-R2l0TGFiIENJL0NE" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-6-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tab" tabindex="-1">GitLab CI/CD</button></div><div aria-labelledby="tab-6-R2l0SHViIEFjdGlvbnM=" class="sphinx-tabs-panel group-tab" id="panel-6-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tabpanel" tabindex="0"></div><div aria-labelledby="tab-6-R2l0TGFiIENJL0NE" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-6-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tabpanel" tabindex="0"><p><a class="reference external" href="https://docs.gitlab.com/ci/yaml/#rules">Rules</a>
+can be used to include/exclude jobs in/from pipelines.</p>
+</div></div>
+</section>
+</section>
+<section id="self-hosting">
+<h1>Self-hosting<a class="headerlink" href="#self-hosting" title="Link to this heading"></a></h1>
+<p>There might be situations where you need
+to run the workflows/pipelines on resources you own,
+instead of relying on <code class="docutils literal notranslate"><span class="pre">github.com</span></code> or any specific gitlab server.</p>
+<p>Possible reasons:</p>
+<ul class="simple">
+<li><p>GitHub actions and GitLab CI/CD on gitlab.com
+have usage limits (for private repos),
+or reliability issues,
+and your test suites take too long</p></li>
+<li><p>You need to test (or benchmark)
+your code with specific hardware and software
+(e.g., on HPC)</p></li>
+</ul>
+<p>Both gitlab and github will schedule jobs on runners
+comparing the tags/labels of the runners
+and the tags/labels of the job:
+for a job to execute on a given runner
+the tags/labels of the job must be a subset
+of the tags/labels of the runner.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-7-R2l0SHViIEFjdGlvbnM=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-7-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tab" tabindex="0">GitHub Actions</button><button aria-controls="panel-7-R2l0TGFiIENJL0NE" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-7-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tab" tabindex="-1">GitLab CI/CD</button></div><div aria-labelledby="tab-7-R2l0SHViIEFjdGlvbnM=" class="sphinx-tabs-panel group-tab" id="panel-7-R2l0SHViIEFjdGlvbnM=" name="R2l0SHViIEFjdGlvbnM=" role="tabpanel" tabindex="0"><p>One can
+<a class="reference external" href="https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners">add</a>
+a self-hosted runner
+to a repository.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>It is a security risk to have a self-hosted runner
+attached to public repositories,
+because in that case
+an attacker
+could open a merge request
+and run malicious code as a part of a workflow
+that gets executed by your self-hosted runner.</p>
+<p>Properly managing <a class="reference internal" href="#mirrors"><span class="std std-ref">mirrors</span></a>
+can alleviate this problem.</p>
+</div>
+<p>Most importantly:</p>
+<ul class="simple">
+<li><p>A job launched on the self-hosted runner can access
+the whole machine/vm/container it is running on,
+and it runs in that context,
+so one might have to start the runner
+inside a container
+(but then, if a job itself
+requires to execute in a container,
+there might be issues)</p></li>
+<li><p>the workflow files might need to be adjusted,
+in particular the value associated to <code class="docutils literal notranslate"><span class="pre">runs-on</span></code>
+for every job (tags)
+need to be a subset
+of the ones that identify the self-hosted runner.</p></li>
+</ul>
+</div><div aria-labelledby="tab-7-R2l0TGFiIENJL0NE" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-7-R2l0TGFiIENJL0NE" name="R2l0TGFiIENJL0NE" role="tabpanel" tabindex="0"><p>One can <a class="reference external" href="https://docs.gitlab.com/runner/">add</a>
+a self-hosted runner
+to a project.</p>
+<p>It is possible to make sure that a self-hosted runner
+runs jobs only on <em>protected branches</em>
+(only few people can make commits on them,
+and merge into them).</p>
+<p>It is also possible to choose different <em>executors</em>,
+for example “docker”,
+which will run jobs inside a container
+(but docker must be present on the host).</p>
+</div></div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../gh-pages/" class="btn btn-neutral float-left" title="Hosting websites/homepages on GitHub Pages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../quick-reference/" class="btn btn-neutral float-right" title="Quick Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright CodeRefinery contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
