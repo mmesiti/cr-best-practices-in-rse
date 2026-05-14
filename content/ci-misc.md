@@ -1,5 +1,10 @@
 # Other features 
 
+```{objectives}
+- Have an idea of what is possible to do with actions or CI, and how
+```
+
+
 [cx-examples-GL]: https://gitlab.com/michele.mesiti/cx-course
 [cx-examples-GH]: https://github.com/mmesiti/cx-course
 [cx-exampler-KIT]: https://gitlab.kit.edu/michele.mesiti/cx-course
@@ -27,7 +32,8 @@ The workflow are defined in `yaml` files
 in `.github/workflows`
 (one file - one workflow)
 
-- Typically each push triggers the **workflow**s 
+- Typically each push triggers the **workflow**s
+  [unless skipped](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) 
 - Each workflow has
   - a list of event triggers (typically `push`, but others are possible, 
     for example `workflow_dispatch`
@@ -73,7 +79,7 @@ at the root of the repository.
 `````
 ``````
 
-```{note} Editing workflow and pipeline files
+```{note} **Editing workflow and pipeline files**
 
 Whenever you want to edit a file that defines a workflow (on GitHub)
 or a pipeline (on GitLab)
@@ -83,15 +89,23 @@ which will vastly reduce the probability of making trivial mistakes.
 
 ```
 
-```{warning}  
-
-**Exercises on GitHub**: starting workflows manually
+```{warning} **Exercises on GitHub**: starting workflows manually
 
 To trigger manually the workflows on GitHub
 using your fork of [example repository][cx-examples-GH],
 you might have to switch the default branch 
 to the appropriate one, in "Settings" -> "General" -> "Default Branch".
 
+```
+
+```{note} **Email notifications**
+
+Both GitHub and GitLab are eager to send you emails 
+when a workflow or pipeline fails.
+
+While this is in most case very useful,
+consider disabling email notifications on the repository 
+you use for the exercises during this session.
 
 ```
 
@@ -103,8 +117,6 @@ This example is available in the example repository,
 on the `main` branch.
 
 
-
-
 ``````{tabs}
 `````{group-tab} GitHub Actions
 
@@ -113,24 +125,27 @@ with 3 steps: checkout, build and run.
 
 
 ```{code-block} yaml
+:emphasize-lines: 3,4,8,12
 name: BasicExample
 on: 
-  - push
-  - workflow_dispatch
+  - push                                  # the workflow runs when we push
+  - workflow_dispatch                     # we can launch the workflow manually
 
 jobs:
   build_and_run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest                # This is necessary, 
+                                          # specifies the kind of host where to run
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6         # We use a pre-defined *action*
       - name: "build"
         run: gcc -o hello ./src/hello.c
       - name: "run"
         run: ./hello
 ```
 
-
+Note that `runs-on` takes one or more labels of a runner,
+and identifies the type of host.
 
 `````
 
@@ -142,15 +157,22 @@ and a single job in that stage that does everything
 in two steps:
 
 ```{code-block} yaml
+:emphasize-lines: 5
 stages: 
   - test
 
 doall:
+  image: ubuntu:latest
   stage: test
   script: 
     - gcc -o hello ./src/hello.c 
     - ./hello
 ```
+
+Note: if we do not specify an `image:`, 
+then a default one will be chosen.
+When we specify one, 
+it is downloaded from a registry (typically, dockerhub).
 
 `````
 ``````
@@ -161,30 +183,22 @@ doall:
 Proper reporting and propagation of the failure
 of a command in a pipeline or workflow is **paramount**.
 
-**A job not reporting a failure is a severe bug**.
+**A CI job not properly reporting a failure is itself a severe bug**.
 
 Switch to the branch `failures`.
 
-A common issue is in the shell script 
-`./scripts/doesnt-fail-but-typically-should.sh`.
+The shell script 
+`./scripts/doesnt-fail-but-typically-should.sh`
+shows a typical pitfall.
 
-- How can the issue be fixed?
+- How can the problem be fixed?
 - What is the default behaviour of on GitHub or GitLab,
   when writing the logic in a workflow/pipeline file 
   instead of a separate shell script?
 
-``````{tabs}
-`````{group-tab} GitHub Actions
-
-`````
-
-`````{group-tab} GitLab CI/CD
-
 Switch to the branch `failures`
-and follow the instructions in the README.
-
-`````
-``````
+and follow the instructions in the README,
+and have a look at the workflow/pipeline definition file.
 
 ## Secrets and repository-specific behaviour
 
@@ -256,6 +270,13 @@ What alternatives do we have?
 `````{group-tab} GitHub Actions
 
 
+[YAML anchors](https://docs.gitlab.com/ee/ci/yaml/yaml\_optimization.html\#anchors)
+also work on GitHub actions (with some limitations compared to GitLab).
+
+In the GitHub context,
+actions themselves are the main building block,
+and they are reusable by default.
+
 
 `````
 
@@ -268,15 +289,27 @@ What alternatives do we have?
 
 See also: [yaml anchors](https://docs.gitlab.com/ee/ci/yaml/yaml\_optimization.html\#anchors)
 
+Another more sophisticated way to reuse code 
+are [components](https://docs.gitlab.com/ci/components/),
+which follow a philosophy similar to actions 
+in the GitHub context.
 
 
 `````
 ``````
 
+
+
+{ref}`Parametric tasks <parametric-jobs>` 
+are also a way to "reuse" code,
+or at least to avoid code duplication.
+
+(parametric-jobs)=
 ## Parametric tasks: Matrix 
 
 Sometimes you might want to run the same job for many different "cases",
 or parameters (e.g., different versions of a library/dependency/compiler).
+
 
 ``````{tabs}
 `````{group-tab} GitHub Actions
@@ -300,7 +333,7 @@ For an example and practice, see the [exercise repository][cx-example-GL] on the
 
 
 
-
+(mirrors)=
 ## Mirroring
 
 A *Mirror* is a copy of a repository 
@@ -355,3 +388,109 @@ The [GitHub mirror][cx-examples-GH] and the [KIT GitLab mirror][cx-examples-KIT]
 
 `````
 ``````
+
+## Conditional execution of workflows, jobs and pipelines
+
+On both platforms 
+it is possible to make so that the execution of the jobs, steps 
+or of the full workflow
+is dependent on some conditions. 
+
+Typical cases are:
+- Always: force the execution of jobs/steps no matter what
+- Only in case of a merge
+- Only in case of a tagged commit
+- Only on a particular branch
+- based on expressions involving environment variables
+- only when some files are changed
+
+``````{tabs}
+`````{group-tab} GitHub Actions
+`````
+
+`````{group-tab} GitLab CI/CD
+[Rules](https://docs.gitlab.com/ci/yaml/#rules) 
+can be used to include/exclude jobs in/from pipelines.
+`````
+``````
+
+
+
+# Self-hosting 
+
+There might be situations where you need 
+to run the workflows/pipelines on resources you own,
+instead of relying on `github.com` or any specific gitlab server.
+
+Possible reasons:
+- GitHub actions and GitLab CI/CD on gitlab.com 
+  have usage limits (for private repos), 
+  or reliability issues,
+  and your test suites take too long
+- You need to test (or benchmark)
+  your code with specific hardware and software
+  (e.g., on HPC)
+
+Both gitlab and github will schedule jobs on runners
+comparing the tags/labels of the runners
+and the tags/labels of the job:
+for a job to execute on a given runner
+the tags/labels of the job must be a subset 
+of the tags/labels of the runner.
+
+``````{tabs}
+`````{group-tab} GitHub Actions
+One can 
+[add](https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/add-runners)
+a self-hosted runner
+to a repository.
+
+````{warning}
+
+It is a security risk to have a self-hosted runner
+attached to public repositories,
+because in that case 
+an attacker
+could open a merge request 
+and run malicious code as a part of a workflow
+that gets executed by your self-hosted runner.
+
+Properly managing {ref}`mirrors <mirrors>` 
+can alleviate this problem.
+````
+Most importantly:
+
+- A job launched on the self-hosted runner can access 
+  the whole machine/vm/container it is running on,
+  and it runs in that context,
+  so one might have to start the runner
+  inside a container
+  (but then, if a job itself 
+  requires to execute in a container,
+  there might be issues)
+- the workflow files might need to be adjusted,
+  in particular the value associated to `runs-on`
+  for every job (tags)
+  need to be a subset 
+  of the ones that identify the self-hosted runner.
+
+`````
+`````{group-tab} GitLab CI/CD
+
+One can [add](https://docs.gitlab.com/runner/)
+a self-hosted runner
+to a project.
+
+It is possible to make sure that a self-hosted runner
+runs jobs only on *protected branches*
+(only few people can make commits on them,
+and merge into them).
+
+It is also possible to choose different *executors*,
+for example "docker",
+which will run jobs inside a container
+(but docker must be present on the host).
+
+`````
+``````
+
